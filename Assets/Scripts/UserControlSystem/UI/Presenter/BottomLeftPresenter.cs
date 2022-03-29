@@ -2,10 +2,11 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UserControlSystem;
 
-namespace UserControlSystem
+namespace Presenter
 {
-    public sealed class BottomLeftPresenter : MonoBehaviour
+    public class BottomLeftPresenter : MonoBehaviour
     {
         [SerializeField] private Image _selectedImage;
         [SerializeField] private Slider _healthSlider;
@@ -17,11 +18,11 @@ namespace UserControlSystem
 
         private void Start()
         {
-            _selectedValue.OnSelected += ONSelected;
-            ONSelected(_selectedValue.CurrentValue);
+            _selectedValue.OnSelected += OnSelected;
+            OnSelected(_selectedValue.CurrentValue);
         }
         
-        private void ONSelected(ISelectable selected)
+        private void OnSelected(ISelectable selected)
         {
             _selectedImage.enabled = selected != null;
             _healthSlider.gameObject.SetActive(selected != null);

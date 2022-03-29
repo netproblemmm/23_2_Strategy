@@ -1,5 +1,5 @@
-﻿using System;
-using Abstractions;
+﻿using Abstractions;
+using System;
 using UnityEngine;
 
 namespace UserControlSystem

@@ -9,11 +9,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Abstractions;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 
-public class Outline : MonoBehaviour
+public class Outline : MonoBehaviour, IOutlineDrawer
 {
     private static HashSet<Mesh> registeredMeshes = new HashSet<Mesh>();
 
@@ -91,7 +92,6 @@ public class Outline : MonoBehaviour
 
     void Awake()
     {
-
         // Cache renderers
         renderers = GetComponentsInChildren<Renderer>();
 
@@ -109,11 +109,10 @@ public class Outline : MonoBehaviour
         needsUpdate = true;
     }
 
-    void OnEnable()
+    void Enable()
     {
         foreach (var renderer in renderers)
         {
-
             // Append outline shaders
             var materials = renderer.sharedMaterials.ToList();
 
@@ -126,7 +125,6 @@ public class Outline : MonoBehaviour
 
     void OnValidate()
     {
-
         // Update material properties
         needsUpdate = true;
 
@@ -154,11 +152,10 @@ public class Outline : MonoBehaviour
         }
     }
 
-    void OnDisable()
+    void Disable()
     {
         foreach (var renderer in renderers)
         {
-
             // Remove outline shaders
             var materials = renderer.sharedMaterials.ToList();
 
@@ -171,7 +168,6 @@ public class Outline : MonoBehaviour
 
     void OnDestroy()
     {
-
         // Destroy material instances
         Destroy(outlineMaskMaterial);
         Destroy(outlineFillMaterial);
@@ -179,13 +175,11 @@ public class Outline : MonoBehaviour
 
     void Bake()
     {
-
         // Generate smooth normals for each mesh
         var bakedMeshes = new HashSet<Mesh>();
 
         foreach (var meshFilter in GetComponentsInChildren<MeshFilter>())
         {
-
             // Skip duplicates
             if (!bakedMeshes.Add(meshFilter.sharedMesh))
             {
@@ -202,11 +196,9 @@ public class Outline : MonoBehaviour
 
     void LoadSmoothNormals()
     {
-
         // Retrieve or generate smooth normals
         foreach (var meshFilter in GetComponentsInChildren<MeshFilter>())
         {
-
             // Skip if smooth normals have already been adopted
             if (!registeredMeshes.Add(meshFilter.sharedMesh))
             {
@@ -219,37 +211,20 @@ public class Outline : MonoBehaviour
 
             // Store smooth normals in UV3
             meshFilter.sharedMesh.SetUVs(3, smoothNormals);
-
-            // Combine submeshes
-            var renderer = meshFilter.GetComponent<Renderer>();
-
-            if (renderer != null)
-            {
-                CombineSubmeshes(meshFilter.sharedMesh, renderer.sharedMaterials);
-            }
         }
 
         // Clear UV3 on skinned mesh renderers
         foreach (var skinnedMeshRenderer in GetComponentsInChildren<SkinnedMeshRenderer>())
         {
-
-            // Skip if UV3 has already been reset
-            if (!registeredMeshes.Add(skinnedMeshRenderer.sharedMesh))
+            if (registeredMeshes.Add(skinnedMeshRenderer.sharedMesh))
             {
-                continue;
+                skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
             }
-
-            // Clear UV3
-            skinnedMeshRenderer.sharedMesh.uv4 = new Vector2[skinnedMeshRenderer.sharedMesh.vertexCount];
-
-            // Combine submeshes
-            CombineSubmeshes(skinnedMeshRenderer.sharedMesh, skinnedMeshRenderer.sharedMaterials);
         }
     }
 
     List<Vector3> SmoothNormals(Mesh mesh)
     {
-
         // Group vertices by location
         var groups = mesh.vertices.Select((vertex, index) => new KeyValuePair<Vector3, int>(vertex, index)).GroupBy(pair => pair.Key);
 
@@ -259,7 +234,6 @@ public class Outline : MonoBehaviour
         // Average normals for grouped vertices
         foreach (var group in groups)
         {
-
             // Skip single vertices
             if (group.Count() == 1)
             {
@@ -271,7 +245,7 @@ public class Outline : MonoBehaviour
 
             foreach (var pair in group)
             {
-                smoothNormal += smoothNormals[pair.Value];
+                smoothNormal += mesh.normals[pair.Value];
             }
 
             smoothNormal.Normalize();
@@ -282,33 +256,11 @@ public class Outline : MonoBehaviour
                 smoothNormals[pair.Value] = smoothNormal;
             }
         }
-
         return smoothNormals;
-    }
-
-    void CombineSubmeshes(Mesh mesh, Material[] materials)
-    {
-
-        // Skip meshes with a single submesh
-        if (mesh.subMeshCount == 1)
-        {
-            return;
-        }
-
-        // Skip if submesh count exceeds material count
-        if (mesh.subMeshCount > materials.Length)
-        {
-            return;
-        }
-
-        // Append combined submesh
-        mesh.subMeshCount++;
-        mesh.SetTriangles(mesh.triangles, mesh.subMeshCount - 1);
     }
 
     void UpdateMaterialProperties()
     {
-
         // Apply properties according to mode
         outlineFillMaterial.SetColor("_OutlineColor", outlineColor);
 
@@ -341,8 +293,20 @@ public class Outline : MonoBehaviour
             case Mode.SilhouetteOnly:
                 outlineMaskMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.LessEqual);
                 outlineFillMaterial.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Greater);
-                outlineFillMaterial.SetFloat("_OutlineWidth", 0f);
+                outlineFillMaterial.SetFloat("_OutlineWidth", 0);
                 break;
+        }
+    }
+
+    public void SetOutline(bool enable)
+    {
+        if (enable)
+        {
+            Enable();
+        }
+        else
+        {
+            Disable();
         }
     }
 }
