@@ -46,6 +46,34 @@ namespace Presenter
                 return;
             }
 
+            var attackUnit = commandExecutor as CommandExecutorBase<IAttackCommand>;
+            if (attackUnit != null)
+            {
+                attackUnit.ExecuteSpecificCommand(_context.Inject(new AttackCommand()));
+                return;
+            }
+
+            var moveUnit = commandExecutor as CommandExecutorBase<IMoveCommand>;
+            if (moveUnit != null)
+            {
+                moveUnit.ExecuteSpecificCommand(_context.Inject(new MoveCommand()));
+                return;
+            }
+
+            var patrolUnit = commandExecutor as CommandExecutorBase<IPatrolCommand>;
+            if (patrolUnit != null)
+            {
+                patrolUnit.ExecuteSpecificCommand(_context.Inject(new PatrolCommand()));
+                return;
+            }
+
+            var stopUnit = commandExecutor as CommandExecutorBase<IStopCommand>;
+            if (stopUnit != null)
+            {
+                stopUnit.ExecuteSpecificCommand(_context.Inject(new StopCommand()));
+                return;
+            }
+
             throw new ApplicationException($"{nameof(CommandButtonsPresenter)}.{nameof(onButtonClick)}: " +
                                            $"Unknown type of commands executor: {commandExecutor.GetType().FullName}!");
         }
