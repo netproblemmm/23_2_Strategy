@@ -42,7 +42,7 @@ namespace Presenter
             var unitProducer = commandExecutor as CommandExecutorBase<IProduceUnitCommand>;
             if (unitProducer != null)
             {
-                unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommand()));
+                unitProducer.ExecuteSpecificCommand(_context.Inject(new ProduceUnitCommandHeir()));
                 return;
             }
 
