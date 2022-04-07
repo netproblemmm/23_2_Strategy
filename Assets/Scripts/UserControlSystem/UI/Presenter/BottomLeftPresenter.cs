@@ -2,11 +2,10 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UserControlSystem;
 
-namespace Presenter
+namespace UserControlSystem
 {
-    public class BottomLeftPresenter : MonoBehaviour
+    public sealed class BottomLeftPresenter : MonoBehaviour
     {
         [SerializeField] private Image _selectedImage;
         [SerializeField] private Slider _healthSlider;

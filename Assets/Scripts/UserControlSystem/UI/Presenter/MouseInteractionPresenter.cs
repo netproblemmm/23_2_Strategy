@@ -3,6 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UserControlSystem;
+using UserControlSystem.UI.Model;
 
 namespace Presenter
 {
@@ -12,26 +13,40 @@ namespace Presenter
         [SerializeField] private SelectableValue _selectedObject;
         [SerializeField] private EventSystem _eventSystem;
 
+        [SerializeField] private Vector3Value _groundClicksRMB;
+        [SerializeField] private Transform _groundTransform;
+
+        private Plane _groundPlane;
+
+        private void Start() => _groundPlane = new Plane(_groundTransform.up, 0);
+
         private void Update()
         {
-            // пока отключил, так как UI заслоняет весь экран и поэтому outline не работает
-            //if (!_eventSystem.IsPointerOverGameObject())
-            //    return;
-
-            if (!Input.GetMouseButtonUp(0))
+            if (!Input.GetMouseButtonUp(0) && !Input.GetMouseButton(1))
                 return;
 
-            var hits = Physics.RaycastAll(_camera.ScreenPointToRay(Input.mousePosition));
-
-            if (hits.Length == 0)
+            if (_eventSystem.IsPointerOverGameObject())
                 return;
-            
-            var selectable = hits
-                .Select(hit => hit.collider.GetComponentInParent<ISelectable>())
-                .Where(c => c != null)
-                .FirstOrDefault();
 
-            _selectedObject.SetValue(selectable);
+            var ray = _camera.ScreenPointToRay(Input.mousePosition);
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                var hits = Physics.RaycastAll(ray);
+                
+                if (hits.Length == 0)
+                    return;
+                
+                var selectable = hits
+                    .Select(hit => hit.collider.GetComponentInParent<ISelectable>())
+                    .FirstOrDefault(c => c != null);
+                _selectedObject.SetValue(selectable);
+            }
+            else
+            {
+                if (_groundPlane.Raycast(ray, out var enter))
+                    _groundClicksRMB.SetValue(ray.origin + ray.direction * enter);
+            }
         }
     }
 }

@@ -2,7 +2,11 @@
     "name": "Model",
     "rootNamespace": "",
     "references": [
-        "GUID:2728968faebc67b4f9216c44328da7f6"
+        "GUID:2728968faebc67b4f9216c44328da7f6",
+        "GUID:0d8beb7f090555447a6cf5ce9e54dbb4",
+        "GUID:c99fbfd7ae2dc284b96f493883a9a4c5",
+        "GUID:a6600e5bf0f8b8d4594b8da9fd206ae5",
+        "GUID:dbfbfad5a37e3174393f973955b760ee"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
