@@ -3,18 +3,15 @@ using UnityEngine;
 
 namespace UserControlSystem.CommandsRealization
 {
-    public sealed class PatrolCommand : IPatrolCommand
+    public class PatrolCommand : IPatrolCommand
     {
-        private Vector3 groundClick;
+        public Vector3 From { get; }
+        public Vector3 To { get; }
 
-        public PatrolCommand(Vector3 groundClick)
+        public PatrolCommand(Vector3 from, Vector3 to)
         {
-            this.groundClick = groundClick;
-        }
-
-        public void ExecuteCommand(IPatrolCommand command)
-        {
-
+            From = from;
+            To = to;
         }
     }
 }

@@ -5,9 +5,10 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - _camera: {instanceID: 0}
-  - _selectedObject: {instanceID: 0}
+  - _selectedObject: {fileID: 11400000, guid: 7141aae4b16134e49af0215b6da77bcf, type: 2}
   - _eventSystem: {instanceID: 0}
-  - _groundClicksRMB: {instanceID: 0}
+  - _groundClicksRMB: {fileID: 11400000, guid: bb5fad44c95c3774e94d390180bfa137, type: 2}
+  - _attackablesRMB: {fileID: 11400000, guid: 8cadeb871377a8c409ffe8d63cab2a76, type: 2}
   - _groundTransform: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}

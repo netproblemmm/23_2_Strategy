@@ -1,20 +1,15 @@
-﻿using Abstractions.Commands;
-using UnityEngine;
+﻿using Abstractions;
+using Abstractions.Commands;
 
 namespace UserControlSystem.CommandsRealization
 {
-    public sealed class AttackCommand : IAttackCommand
+    public class AttackCommand : IAttackCommand
     {
-        private Vector3 groundClick;
+        public IAttackable Target { get; }
 
-        public AttackCommand(Vector3 groundClick)
+        public AttackCommand(IAttackable target)
         {
-            this.groundClick = groundClick;
-        }
-
-        public void ExecuteCommand(IAttackCommand command)
-        {
-            
+            Target = target;
         }
     }
 }

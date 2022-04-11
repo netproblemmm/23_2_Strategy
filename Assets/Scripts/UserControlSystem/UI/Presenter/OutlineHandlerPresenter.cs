@@ -13,7 +13,7 @@ namespace Presenter
         private List<IOutlineDrawer> _currentOutline = new List<IOutlineDrawer>();
 
         private void Start() {
-            _selectable.OnSelected += OnSelected;
+            _selectable.OnNewValue += OnSelected;
         }
 
         private void OnSelected(ISelectable selectable) {
