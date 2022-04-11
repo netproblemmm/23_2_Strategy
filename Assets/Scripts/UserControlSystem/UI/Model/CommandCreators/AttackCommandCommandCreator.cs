@@ -4,6 +4,7 @@ using System;
 using UnityEngine;
 using Utils;
 using Zenject;
+using Abstractions;
 
 namespace UserControlSystem.UI.Model
 {
@@ -13,11 +14,14 @@ namespace UserControlSystem.UI.Model
         private Action<IAttackCommand> _creationCallback;
 
         [Inject]
-        private void Init(Vector3Value groundClicks) => groundClicks.OnNewValue += OnNewValue;
-
-        private void OnNewValue(Vector3 groundClick)
+        private void Init(AttackableValue groundClicks)
         {
-            _creationCallback?.Invoke(_context.Inject(new AttackCommand(groundClick)));
+            groundClicks.OnNewValue += OnNewValue;
+        }
+
+        private void OnNewValue(IAttackable attackable)
+        {
+            _creationCallback?.Invoke(_context.Inject(new AttackCommand(attackable)));
             _creationCallback = null;
         }
 

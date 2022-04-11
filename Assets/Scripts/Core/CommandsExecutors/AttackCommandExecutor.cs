@@ -5,7 +5,7 @@ public class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
 {
     public override void ExecuteSpecificCommand(IAttackCommand command)
     {
-        Debug.Log($"Unit is attacking!");
+        Debug.Log($"Unit is attacking to {command.Target}!");
     }
 }
 

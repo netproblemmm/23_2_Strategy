@@ -7,17 +7,22 @@ using Zenject;
 
 namespace UserControlSystem.UI.Model
 {
-    public sealed class PatrolCommandCommandCreator : CommandCreatorBase<IPatrolCommand>
+    public class PatrolCommandCommandCreator : CommandCreatorBase<IPatrolCommand>
     {
         [Inject] private AssetsContext _context;
+        [Inject] private SelectableValue _selectable;
+
         private Action<IPatrolCommand> _creationCallback;
 
         [Inject]
-        private void Init(Vector3Value groundClicks) => groundClicks.OnNewValue += OnNewValue;
+        private void Init(Vector3Value groundClicks)
+        {
+            groundClicks.OnNewValue += OnNewValue;
+        }
 
         private void OnNewValue(Vector3 groundClick)
         {
-            _creationCallback?.Invoke(_context.Inject(new PatrolCommand(groundClick)));
+            _creationCallback?.Invoke(_context.Inject(new PatrolCommand(_selectable.CurrentValue.PivotPoint.position, groundClick)));
             _creationCallback = null;
         }
 

@@ -13,7 +13,10 @@ namespace UserControlSystem.UI.Model
         private Action<IStopCommand> _creationCallback;
 
         [Inject]
-        private void Init(Vector3Value groundClicks) => groundClicks.OnNewValue += OnNewValue;
+        private void Init(Vector3Value groundClicks)
+        {
+            groundClicks.OnNewValue += OnNewValue;
+        }
 
         private void OnNewValue(Vector3 groundClick)
         {
