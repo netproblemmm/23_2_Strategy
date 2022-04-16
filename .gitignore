@@ -20,7 +20,7 @@
 [Aa]ssets/Plugins/Editor/JetBrains*
 
 # Assets
-/[Aa]ssets/3D Game Kit*
+# /[Aa]ssets/3D Game Kit*
 
 # Visual Studio cache directory
 .vs/
