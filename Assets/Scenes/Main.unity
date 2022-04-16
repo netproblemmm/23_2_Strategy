@@ -122,7 +122,7 @@ NavMeshSettings:
     preserveTilesOutsideBounds: 0
     debug:
       m_Flags: 0
-  m_NavMeshData: {fileID: 0}
+  m_NavMeshData: {fileID: 23800000, guid: eafb3a9310ada4e4ca105f8109f11c1c, type: 2}
 --- !u!1 &47868609
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ MonoBehaviour:
   _eventSystem: {fileID: 467524304}
   _groundClicksRMB: {fileID: 11400000, guid: bb5fad44c95c3774e94d390180bfa137, type: 2}
   _attackablesRMB: {fileID: 11400000, guid: 8cadeb871377a8c409ffe8d63cab2a76, type: 2}
-  _groundTransform: {fileID: 2003567869}
+  _groundTransform: {fileID: 168921229}
 --- !u!114 &47868612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +215,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &168921229
 Transform:
@@ -840,6 +840,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1748817644}
     m_Modifications:
+    - target: {fileID: 8323413111487413095, guid: ceb3be3560f0a3e40962e9232f3f92b8, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 662afc8aa381e704fae5181557dbc6c0, type: 2}
     - target: {fileID: 8323413111496788133, guid: ceb3be3560f0a3e40962e9232f3f92b8, type: 3}
       propertyPath: m_Name
       value: Chomper
@@ -928,7 +932,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 04fa4995cb1cfcd4eb8dc1defa230c89, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.20848799
+      value: -0.41
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 04fa4995cb1cfcd4eb8dc1defa230c89, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1149,6 +1153,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eeaf496298694114589d7df6293f8f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _stop: {fileID: 1823276924}
+  _animator: {fileID: 1823276922}
+--- !u!95 &1823276922 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8323413111487413095, guid: ceb3be3560f0a3e40962e9232f3f92b8, type: 3}
+  m_PrefabInstance: {fileID: 1283407757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!195 &1823276923
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823276909}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &1823276924
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823276909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f720b7094da3f4f8305ae134b12e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _agent: {fileID: 1823276923}
 --- !u!1 &1834126934
 GameObject:
   m_ObjectHideFlags: 0
