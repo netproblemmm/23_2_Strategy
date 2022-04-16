@@ -1,11 +1,15 @@
 using Abstractions.Commands;
 using UnityEngine;
 
-public class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
+namespace Core.CommandsExecutors
 {
-    public override void ExecuteSpecificCommand(IAttackCommand command)
+    public class AttackCommandExecutor : CommandExecutorBase<IAttackCommand>
     {
-        Debug.Log($"Unit is attacking to {command.Target}!");
+        public override void ExecuteSpecificCommand(IAttackCommand command)
+        {
+            Debug.Log($"Unit is attacking to {command.Target}!");
+        }
     }
 }
+
 
