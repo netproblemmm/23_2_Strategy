@@ -1,5 +1,5 @@
-﻿using Abstractions;
-using UnityEngine;
+﻿using UnityEngine;
+using Utils;
 
 namespace UserControlSystem.UI.Model
 {

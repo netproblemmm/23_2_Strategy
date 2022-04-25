@@ -4,7 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - _attackButton: {fileID: 5122495238456850508, guid: 5dd235a43d36f9347a1a35df441f10d9, type: 3}
+  - _attackButton: {instanceID: 0}
   - _moveButton: {instanceID: 0}
   - _patrolButton: {instanceID: 0}
   - _stopButton: {instanceID: 0}

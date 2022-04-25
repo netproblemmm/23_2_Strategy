@@ -1,57 +1,22 @@
 ﻿using System;
 using UnityEngine;
-using Utils;
 
-public abstract class ScriptableObjectValueBase<T> : ScriptableObject, IAwaitable<T>
+namespace Utils
 {
-    public class NewValueNotifier<TAwaited> : IAwaiter<TAwaited>
+    public abstract class ScriptableObjectValueBase<T> : ScriptableObject, IAwaitable<T>
     {
-        private readonly ScriptableObjectValueBase<TAwaited> _scriptableObjectValueBase;
-        private TAwaited _result;
-        private Action _continuation;
-        private bool _isCompleted;
+        public T CurrentValue { get; private set; }
+        public Action<T> OnNewValue;
 
-        public NewValueNotifier(ScriptableObjectValueBase<TAwaited> scriptableObjectValueBase)
+        public virtual void SetValue(T value)
         {
-            _scriptableObjectValueBase = scriptableObjectValueBase;
-            _scriptableObjectValueBase.OnNewValue += OnNewValue;
+            CurrentValue = value;
+            OnNewValue?.Invoke(value);
         }
 
-        private void OnNewValue(TAwaited obj)
+        public IAwaiter<T> GetAwaiter()
         {
-            _scriptableObjectValueBase.OnNewValue -= OnNewValue;
-            _result = obj;
-            _isCompleted = true;
-            _continuation?.Invoke();
+            return new NewValueNotifier<T>(this);
         }
-
-        public void OnCompleted(Action continuation)
-        {
-            if (_isCompleted)
-            {
-                continuation?.Invoke();
-            }
-            else
-            {
-                _continuation = continuation;
-            }
-        }
-
-        public bool IsCompleted => _isCompleted;
-        public TAwaited GetResult() => _result;
-    }
-
-    public T CurrentValue { get; private set; }
-    public Action<T> OnNewValue;
-
-    public void SetValue(T value)
-    {
-        CurrentValue = value;
-        OnNewValue?.Invoke(value);
-    }
-
-    public IAwaiter<T> GetAwaiter()
-    {
-        return new NewValueNotifier<T>(this);
     }
 }
