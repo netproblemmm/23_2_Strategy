@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 92e76e32347893b4e8305e2c392ef974
+guid: ed88c9f0cf708db43bfae1453fe55734
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences:
-  - _chomperSprite: {fileID: 21300000, guid: 9908913e928c42d4f9f1891893bbc424, type: 3}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
