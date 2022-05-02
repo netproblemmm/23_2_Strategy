@@ -8,6 +8,7 @@ MonoImporter:
   - _groundClicksRMB: {fileID: 11400000, guid: bb5fad44c95c3774e94d390180bfa137, type: 2}
   - _attackableClicksRMB: {fileID: 11400000, guid: 8cadeb871377a8c409ffe8d63cab2a76, type: 2}
   - _selectables: {fileID: 11400000, guid: 7141aae4b16134e49af0215b6da77bcf, type: 2}
+  - _chomperSprite: {fileID: 21300000, guid: 9908913e928c42d4f9f1891893bbc424, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
